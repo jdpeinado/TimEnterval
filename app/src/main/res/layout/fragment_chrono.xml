@@ -7,6 +7,17 @@
     tools:context=".view.ui.fragment.ChronoFragment"
     android:background="@color/colorPrimaryDark">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarChronometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,22 +40,22 @@
                 style="@style/Typo24Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Ronda 1/Serie 2" />
+                android:text="Ronda 1/Serie 1" />
 
             <TextView
-                android:id="@+id/tvChrono"
+                android:id="@+id/chronometer"
                 style="@style/TypoBig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="00:00,00"/>
+                tools:text="00:00"/>
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/bStopPause"
+            android:id="@+id/bPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorButtons"
-            android:text="@string/stopPause"
+            android:text="@string/pause"
             android:textColor="@color/colorText70"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -5,15 +5,15 @@
     <string name="same_time_text">Mismo tiempo</string>
     <string name="rest_time">Tiempo Descanso</string>
     <string name="series_time">Tiempo series</string>
-    <string name="start">Iniciar</string>
+    <string name="start">INICIAR</string>
     <string name="rounds_rest_button">DESCANSO RONDAS</string>
     <string name="series_time_button">TIEMPO SERIES</string>
     <string name="rest_time_button">DESCANSO SERIES</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="seconds">seg</string>
-    <string name="stopPause">DETENER</string>
+    <string name="pause">DETENER</string>
 
+    <string name="rest_round_message">Descanso Ronda %1$d</string>
+    <string name="rest_serie_message">Ronda %1$d/Descanso Serie %2$d</string>
+    <string name="round_serie_message">Ronda %1$d/Serie %2$d</string>
 
 </resources>

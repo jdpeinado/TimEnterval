@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_chronoFragment2"
-            app:destination="@id/chronoFragment2" />
+            app:destination="@id/chronoFragment" />
         <action
             android:id="@+id/action_homeFragment_to_timeConfFragment"
             app:destination="@id/timeConfFragment" />
@@ -23,7 +23,7 @@
         android:label="fragment_time_conf"
         tools:layout="@layout/fragment_time_conf" />
     <dialog
-        android:id="@+id/chronoFragment2"
+        android:id="@+id/chronoFragment"
         android:name="com.josedo.timenterval.view.ui.fragment.ChronoFragment"
         android:label="fragment_chrono"
         tools:layout="@layout/fragment_chrono" />
