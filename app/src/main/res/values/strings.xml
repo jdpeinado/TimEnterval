@@ -33,5 +33,6 @@
     <string name="series_error_message">Número de series debe de ser mayor a 0</string>
     <string name="series_time_error_message">Las series deben de tener un tiempo diferente a 0, rondas y series mayor a 0</string>
     <string name="chrono_without_finnised">Se dentendrá el actual cronómetro</string>
+    <string name="timer_dialog_title">Seleccionar tiempo</string>
 
 </resources>

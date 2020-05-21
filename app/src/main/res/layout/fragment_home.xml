@@ -295,7 +295,7 @@
                                 android:layout_weight="4"
                                 android:text="@string/series_time" />
 
-                            <com.vicmikhailau.maskededittext.MaskedEditText
+                            <EditText
                                 android:id="@+id/edTime"
                                 style="@style/Typo24Regular"
                                 android:layout_width="0dp"
@@ -303,13 +303,14 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="2.5"
                                 android:background="@drawable/edittext_border"
+                                android:enabled="true"
+                                android:focusable="false"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
-                                android:text="00:00"
-                                app:mask="##:##" />
+                                android:text="00:00" />
 
                             <TextView
                                 style="@style/Typo16RegularWhite"
@@ -358,7 +359,7 @@
                                 android:layout_weight="4"
                                 android:text="@string/rest_time" />
 
-                            <com.vicmikhailau.maskededittext.MaskedEditText
+                            <EditText
                                 android:id="@+id/edRestTime"
                                 style="@style/Typo24Regular"
                                 android:layout_width="0dp"
@@ -366,13 +367,14 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="2.5"
                                 android:background="@drawable/edittext_border"
+                                android:enabled="true"
+                                android:focusable="false"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
-                                android:text="00:00"
-                                app:mask="##:##" />
+                                android:text="00:00" />
 
                             <TextView
                                 style="@style/Typo16RegularWhite"
@@ -413,8 +415,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="10dp"
                         android:orientation="vertical">
@@ -434,7 +436,7 @@
                                 android:layout_weight="4"
                                 android:text="@string/prepared_time" />
 
-                            <com.vicmikhailau.maskededittext.MaskedEditText
+                            <EditText
                                 android:id="@+id/edPreparedTime"
                                 style="@style/Typo24Regular"
                                 android:layout_width="0dp"
@@ -442,13 +444,14 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="2.5"
                                 android:background="@drawable/edittext_border"
+                                android:enabled="true"
+                                android:focusable="false"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
-                                android:text="00:00"
-                                app:mask="##:##" />
+                                android:text="00:00" />
 
                             <TextView
                                 style="@style/Typo16RegularWhite"
@@ -497,7 +500,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cvTimeDefine"/>
+                app:layout_constraintTop_toBottomOf="@+id/cvTimeDefine" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

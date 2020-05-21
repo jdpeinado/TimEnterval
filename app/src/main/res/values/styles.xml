@@ -50,4 +50,8 @@
         <item name="android:colorForeground">#803E698A</item>
     </style>
 
+    <style name="NumberPickerTextColorStyle" parent="Theme.MaterialComponents.Light.DarkActionBar" >
+        <item name="android:textColorPrimary">@color/colorText100</item>
+    </style>
+
 </resources>

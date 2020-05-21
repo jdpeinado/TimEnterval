@@ -1,10 +1,9 @@
 package com.josedo.timenterval.view.ui.fragment
 
-import android.content.DialogInterface
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +16,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.josedo.timenterval.R
-import com.josedo.timenterval.utils.InputFilterMinMax
 import com.josedo.timenterval.utils.Utils
 import com.josedo.timenterval.view.adapter.TimeConfAdapter
 import com.josedo.timenterval.view.adapter.TimeConfListener
 import com.josedo.timenterval.viewmodel.ShareViewModel
 import kotlinx.android.synthetic.main.fragment_time_conf.*
-import kotlinx.android.synthetic.main.item_time_conf.*
+import kotlinx.android.synthetic.main.time_picker_dialog.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -53,7 +51,7 @@ class TimeConfFragment : DialogFragment(), TimeConfListener {
         viewModel = activity?.run {
             ViewModelProviders.of(this).get(ShareViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
-        timeConfAdapter = TimeConfAdapter(this)
+        timeConfAdapter = TimeConfAdapter(requireContext(), this)
         rvDifferentTime.apply {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             adapter = timeConfAdapter
@@ -144,25 +142,16 @@ class TimeConfFragment : DialogFragment(), TimeConfListener {
             }
         }
 
-        edSameTime.filters = arrayOf(InputFilterMinMax(0, 59))
-        edSameTime.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                updateData()
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-        })
+        showTimerPickerDialog(edSameTime)
 
         ivSameTimeAdd.setOnClickListener {
-            addTime(edSameTime)
+            Utils.addTime(edSameTime)
+            updateData()
         }
 
         ivSameTimeRemove.setOnClickListener {
-            removeTime(edSameTime)
+            Utils.removeTime(edSameTime)
+            updateData()
         }
 
         bStart.setOnClickListener {
@@ -199,19 +188,8 @@ class TimeConfFragment : DialogFragment(), TimeConfListener {
         }
     }
 
-    override fun onUpdateDataListener(position: Int, input: String) {
-        var mili: Long
-        try{
-            var m = 0
-            var s = 0
-            if (input.indexOf(":") != -1 || input.indexOf(":") != -1) {
-                m = input.subSequence(0, input.indexOf(":")).toString().toInt()
-                s = input.subSequence(input.indexOf(":") + 1, input.length).toString().toInt()
-            }
-            mili = ((s * 1000) + (m * 60 * 1000)).toLong()
-        } catch (ex: NumberFormatException){
-            mili = 0L
-        }
+    override fun onUpdateDataListener(position: Int, editText: EditText) {
+        val mili: Long = Utils.getMiliFromEt(editText)
 
         when(typeTimeConf){
             HomeFragment.restRoundsType -> {
@@ -223,6 +201,28 @@ class TimeConfFragment : DialogFragment(), TimeConfListener {
             HomeFragment.restSeriesType -> {
                 viewModel.intervalTime.value?.seriesTime?.set(position*2+1, mili)
             }
+        }
+    }
+
+    private fun showTimerPickerDialog(editText: EditText){
+        editText.setOnClickListener {
+            val mDialogView = LayoutInflater.from(ContextThemeWrapper(context, R.style.NumberPickerTextColorStyle)).inflate(R.layout.time_picker_dialog, null)
+            val mBuilder = AlertDialog.Builder(this.context)
+                    .setView(mDialogView)
+            val mAlertDialog = mBuilder.show()
+            mAlertDialog.setCanceledOnTouchOutside(true)
+            mAlertDialog.bAcceptPicker.setOnClickListener {
+                editText.setText(String.format(Locale.getDefault(), "%02d:%02d", mAlertDialog.minutes.value, mAlertDialog.seconds.value), TextView.BufferType.EDITABLE)
+                updateData()
+                mAlertDialog.dismiss()
+            }
+            mAlertDialog.seconds.maxValue = 59
+            mAlertDialog.seconds.minValue = 0
+            mAlertDialog.minutes.maxValue = 99
+            mAlertDialog.minutes.minValue = 0
+            val mili = Utils.getMiliFromEt(editText)
+            mAlertDialog.minutes.setValue(Utils.getMinutesFromMiliseconds(mili))
+            mAlertDialog.seconds.setValue(Utils.getSecondsFromMiliseconds(mili))
         }
     }
 
@@ -252,51 +252,5 @@ class TimeConfFragment : DialogFragment(), TimeConfListener {
         }
 
         viewModel.intervalTime.value?.reset()
-    }
-
-    private fun addTime(editText: EditText) {
-        val input = editText.text.toString()
-        if (input.indexOf(":") == -1 || input.indexOf(":") == -1)
-            editText.setText("00:01", TextView.BufferType.EDITABLE)
-        val h = input.subSequence(0, input.indexOf(":")).toString()
-        val m = input.subSequence(input.indexOf(":") + 1, input.length).toString()
-        var h_int = h.toInt()
-        var m_int = m.toInt()
-        if (h_int == 59 && m_int == 59) {
-            //maximum, do nothing
-        } else {
-            if (m_int == 59) {
-                h_int += 1
-                m_int = 0
-                editText.setText(String.format(Locale.getDefault(), "%02d:%02d", h_int, m_int), TextView.BufferType.EDITABLE)
-            } else {
-                m_int += 1
-                editText.setText(String.format(Locale.getDefault(), "%02d:%02d", h_int, m_int), TextView.BufferType.EDITABLE)
-            }
-            updateData()
-        }
-    }
-
-    private fun removeTime(editText: EditText) {
-        val input = editText.text.toString()
-        if (input.indexOf(":") == -1 || input.indexOf(":") == -1)
-            editText.setText("00:01", TextView.BufferType.EDITABLE)
-        val h = input.subSequence(0, input.indexOf(":")).toString()
-        val m = input.subSequence(input.indexOf(":") + 1, input.length).toString()
-        var h_int = h.toInt()
-        var m_int = m.toInt()
-        if (h_int == 0 && m_int == 0) {
-            //minimum, do nothing
-        } else {
-            if (m_int == 0) {
-                h_int -= 1
-                m_int = 59
-                editText.setText(String.format(Locale.getDefault(), "%02d:%02d", h_int, m_int), TextView.BufferType.EDITABLE)
-            } else {
-                m_int -= 1
-                editText.setText(String.format(Locale.getDefault(), "%02d:%02d", h_int, m_int), TextView.BufferType.EDITABLE)
-            }
-            updateData()
-        }
     }
 }

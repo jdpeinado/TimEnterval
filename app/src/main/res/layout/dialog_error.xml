@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvTitleDialog"
+        style="@style/Typo16RegularWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Es el titulo"
-        style="@style/Typo16RegularWhite"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:background="@color/colorSeries"
         android:gravity="center"
-        android:background="@color/colorSeries"/>
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        tools:text="Es el titulo" />
 
     <TextView
         android:id="@+id/tvMessageDialog"
+        style="@style/Typo16RegularWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:gravity="center"
         android:paddingStart="10dp"
+        android:paddingTop="20dp"
         android:paddingEnd="10dp"
-        style="@style/Typo16RegularWhite"
-        tools:text = "Esto es una prueba de mensaje"
-        android:gravity="center"/>
+        android:paddingBottom="20dp"
+        tools:text="Esto es una prueba de mensaje" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/bCloseDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/accept"
-            android:background="@color/colorButtons"
             android:layout_gravity="start"
-            android:layout_marginEnd="5dp"/>
+            android:layout_marginEnd="5dp"
+            android:background="@color/colorButtons"
+            android:backgroundTint="@color/colorButtons"
+            android:text="@string/accept"
+            android:textColor="@color/colorText70" />
+
         <Button
             android:id="@+id/bAccept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            android:background="@color/colorButtons"
             android:layout_gravity="end"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="5dp"
+            android:background="@color/colorButtons"
+            android:backgroundTint="@color/colorButtons"
+            android:text="@string/cancel"
+            android:textColor="@color/colorText70" />
 
     </LinearLayout>
 

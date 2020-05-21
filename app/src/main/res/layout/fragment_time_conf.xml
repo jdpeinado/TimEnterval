@@ -93,19 +93,20 @@
                             android:gravity="center_horizontal|center_vertical"
                             android:orientation="horizontal">
 
-                            <com.vicmikhailau.maskededittext.MaskedEditText
+                            <EditText
                                 android:id="@+id/edSameTime"
                                 style="@style/Typo24Regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:background="@drawable/edittext_border"
+                                android:enabled="true"
+                                android:focusable="false"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingStart="10dp"
                                 android:paddingEnd="10dp"
-                                android:text="00:00"
-                                app:mask="##:##" />
+                                android:text="00:00" />
 
                             <TextView
                                 style="@style/Typo16RegularWhite"
