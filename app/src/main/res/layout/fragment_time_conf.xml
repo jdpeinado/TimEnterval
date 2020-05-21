@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.ui.fragment.TimeConfFragment"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    tools:context=".view.ui.fragment.TimeConfFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarTimeConf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:enabled="true"
-                    android:theme="@style/SwitchTheme"/>
+                    android:theme="@style/SwitchTheme" />
 
             </LinearLayout>
 
@@ -72,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -81,24 +93,25 @@
                             android:gravity="center_horizontal|center_vertical"
                             android:orientation="horizontal">
 
-                            <EditText
+                            <com.vicmikhailau.maskededittext.MaskedEditText
                                 android:id="@+id/edSameTime"
                                 style="@style/Typo24Regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:background="@drawable/edittext_border"
-                                android:inputType="none"
+                                android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingStart="10dp"
                                 android:paddingEnd="10dp"
-                                android:text="00:20" />
+                                android:text="00:00"
+                                app:mask="##:##" />
 
                             <TextView
                                 style="@style/Typo16RegularWhite"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/seconds"/>
+                                android:text="@string/seconds" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -132,186 +145,12 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
-                        <LinearLayout
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvDifferentTime"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/Typo24Regular"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="4"
-                                tools:text="Serie 1" />
-
-                            <EditText
-                                style="@style/Typo24Regular"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:layout_weight="2"
-                                android:background="@drawable/edittext_border"
-                                android:inputType="none"
-                                android:maxLength="5"
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                tools:text="00:10" />
-
-                            <TextView
-                                style="@style/Typo16RegularWhite"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:text="@string/seconds"/>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
-                                    android:src="@drawable/ic_add"
-                                    android:tint="@color/colorText100" />
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_remove"
-                                    android:tint="@color/colorText100" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/Typo24Regular"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="4"
-                                tools:text="Serie 2" />
-
-                            <EditText
-                                android:id="@+id/edRestTime"
-                                style="@style/Typo24Regular"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:layout_weight="2"
-                                android:background="@drawable/edittext_border"
-                                android:inputType="none"
-                                android:maxLength="5"
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                tools:text="00:30" />
-
-                            <TextView
-                                style="@style/Typo16RegularWhite"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:text="@string/seconds"/>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/ivRestTimeAdd"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
-                                    android:src="@drawable/ic_add"
-                                    android:tint="@color/colorText100" />
-
-                                <ImageView
-                                    android:id="@+id/ivRestTimeRemove"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_remove"
-                                    android:tint="@color/colorText100" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/Typo24Regular"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="4"
-                                tools:text="Serie 3" />
-
-                            <EditText
-                                style="@style/Typo24Regular"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:layout_weight="2"
-                                android:background="@drawable/edittext_border"
-                                android:inputType="none"
-                                android:maxLength="5"
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                tools:text="00:15" />
-
-                            <TextView
-                                style="@style/Typo16RegularWhite"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:text="@string/seconds"/>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
-                                    android:src="@drawable/ic_add"
-                                    android:tint="@color/colorText100" />
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_remove"
-                                    android:tint="@color/colorText100" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -326,14 +165,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorButtons"
-                android:text="@string/start"
+                android:text="@string/accept"
                 android:textColor="@color/colorText70"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

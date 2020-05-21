@@ -205,7 +205,6 @@
                     android:id="@+id/switchSameTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:enabled="true"
                     android:theme="@style/SwitchTheme"
                     app:layout_constraintStart_toEndOf="@+id/tvSameTime"
                     app:layout_constraintTop_toBottomOf="@+id/cvRounds" />
@@ -296,26 +295,28 @@
                                 android:layout_weight="4"
                                 android:text="@string/series_time" />
 
-                            <EditText
+                            <com.vicmikhailau.maskededittext.MaskedEditText
                                 android:id="@+id/edTime"
                                 style="@style/Typo24Regular"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:layout_weight="2"
+                                android:layout_weight="2.5"
                                 android:background="@drawable/edittext_border"
-                                android:inputType="none"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:inputType="number"
                                 android:maxLength="5"
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                tools:text="00:20" />
+                                android:paddingStart="5dp"
+                                android:paddingEnd="5dp"
+                                android:text="00:00"
+                                app:mask="##:##" />
 
                             <TextView
                                 style="@style/Typo16RegularWhite"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:text="@string/seconds"/>
+                                android:layout_weight="1"
+                                android:text="@string/seconds" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -357,26 +358,28 @@
                                 android:layout_weight="4"
                                 android:text="@string/rest_time" />
 
-                            <EditText
+                            <com.vicmikhailau.maskededittext.MaskedEditText
                                 android:id="@+id/edRestTime"
                                 style="@style/Typo24Regular"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:layout_weight="2"
+                                android:layout_weight="2.5"
                                 android:background="@drawable/edittext_border"
-                                android:inputType="none"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:inputType="number"
                                 android:maxLength="5"
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                tools:text="00:10" />
+                                android:paddingStart="5dp"
+                                android:paddingEnd="5dp"
+                                android:text="00:00"
+                                app:mask="##:##" />
 
                             <TextView
                                 style="@style/Typo16RegularWhite"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:text="@string/seconds"/>
+                                android:layout_weight="1"
+                                android:text="@string/seconds" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -407,9 +410,80 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
 
+                        <LinearLayout
+                            android:id="@+id/llPreparedTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/Typo16RegularWhite"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="4"
+                                android:text="@string/prepared_time" />
+
+                            <com.vicmikhailau.maskededittext.MaskedEditText
+                                android:id="@+id/edPreparedTime"
+                                style="@style/Typo24Regular"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_weight="2.5"
+                                android:background="@drawable/edittext_border"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:inputType="number"
+                                android:maxLength="5"
+                                android:paddingStart="5dp"
+                                android:paddingEnd="5dp"
+                                android:text="00:00"
+                                app:mask="##:##" />
+
+                            <TextView
+                                style="@style/Typo16RegularWhite"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/seconds" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/ivPreparedTimeAdd"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:src="@drawable/ic_add"
+                                    android:tint="@color/colorText100" />
+
+                                <ImageView
+                                    android:id="@+id/ivPreparedTimeRemove"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_remove"
+                                    android:tint="@color/colorText100" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
-
 
             </androidx.cardview.widget.CardView>
 
@@ -422,7 +496,8 @@
                 android:textColor="@color/colorText70"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvTimeDefine"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

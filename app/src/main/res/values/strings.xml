@@ -5,15 +5,33 @@
     <string name="same_time_text">Mismo tiempo</string>
     <string name="rest_time">Tiempo Descanso</string>
     <string name="series_time">Tiempo series</string>
+    <string name="prepared_time">Tiempo de preparación</string>
     <string name="start">INICIAR</string>
+    <string name="accept">ACEPTAR</string>
+    <string name="cancel">CANCELAR</string>
     <string name="rounds_rest_button">DESCANSO RONDAS</string>
     <string name="series_time_button">TIEMPO SERIES</string>
     <string name="rest_time_button">DESCANSO SERIES</string>
     <string name="seconds">seg</string>
     <string name="pause">DETENER</string>
+    <string name="reset">REINICIAR</string>
 
     <string name="rest_round_message">Descanso Ronda %1$d</string>
     <string name="rest_serie_message">Ronda %1$d/Descanso Serie %2$d</string>
     <string name="round_serie_message">Ronda %1$d/Serie %2$d</string>
+    <string name="preparing_message">Listo en...</string>
+
+    <string name="time_conf_rest_round_message">Descanso entre rondas</string>
+    <string name="time_conf_rest_series_message">Descanso entre series</string>
+    <string name="time_conf_time_series_message">Tiempo de series</string>
+
+    <string name="round_time_conf_title">Ronda %1$d</string>
+    <string name="serie_time_conf_title">Serie %1$d</string>
+
+    <string name="title_error_message">Atención</string>
+    <string name="rounds_error_message">Número de rondas debe de ser mayor a 0</string>
+    <string name="series_error_message">Número de series debe de ser mayor a 0</string>
+    <string name="series_time_error_message">Las series deben de tener un tiempo diferente a 0, rondas y series mayor a 0</string>
+    <string name="chrono_without_finnised">Se dentendrá el actual cronómetro</string>
 
 </resources>
