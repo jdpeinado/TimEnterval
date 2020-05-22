@@ -55,7 +55,8 @@
             android:background="@color/colorButtons"
             android:backgroundTint="@color/colorButtons"
             android:text="@string/cancel"
-            android:textColor="@color/colorText70" />
+            android:textColor="@color/colorText70"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
