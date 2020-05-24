@@ -39,8 +39,8 @@ class ChronoFragment : DialogFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chrono, container, false)
@@ -54,7 +54,7 @@ class ChronoFragment : DialogFragment() {
         } ?: throw Exception("Invalid Activity")
 
         toolbarChronometer.navigationIcon =
-                ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
+            ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
         toolbarChronometer.setTitleTextColor(Color.WHITE)
         toolbarChronometer.setNavigationOnClickListener {
             if (viewModel.mTimerRunning.value!!) {
@@ -109,36 +109,37 @@ class ChronoFragment : DialogFragment() {
 
     private fun startTimer() {
         mCountDownTimer =
-                object : CountDownTimer(viewModel.intervalTime.value?.mTimeLeftInMillis!!, 1) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        viewModel.intervalTime.value?.mTimeLeftInMillis = millisUntilFinished
-                        updateCountDownText()
-                    }
+            object : CountDownTimer(viewModel.intervalTime.value?.mTimeLeftInMillis!!, 1) {
+                override fun onTick(millisUntilFinished: Long) {
+                    viewModel.intervalTime.value?.mTimeLeftInMillis = millisUntilFinished
+                    updateCountDownText()
+                }
 
-                    override fun onFinish() {
-                        if (viewModel.intervalTime.value?.isEnd()!!) {
-                            viewModel.mTimerRunning.value = false
-                            bPause.visibility = View.INVISIBLE
-                            viewModel.intervalTime.value?.reset()
-                            val timeLeftFormatted: String =
-                                    java.lang.String.format(
-                                            Locale.getDefault(),
-                                            "%02d:%02d,%02d",
-                                            0,
-                                            0,
-                                            0
-                                    )
-                            chronometer.text = timeLeftFormatted
-                        } else {
-                            mCountDownTimer?.cancel()
-                            viewModel.intervalTime.value?.setNextTime()
-                            startTimer()
-                        }
+                override fun onFinish() {
+                    if (viewModel.intervalTime.value?.isEnd()!!) {
+                        viewModel.mTimerRunning.value = false
+                        bPause.visibility = View.INVISIBLE
+                        viewModel.intervalTime.value?.reset()
+                        val timeLeftFormatted: String =
+                            java.lang.String.format(
+                                Locale.getDefault(),
+                                "%02d:%02d",
+                                0,
+                                0
+                            )
+                        chronometer.text = timeLeftFormatted
+                    } else {
+                        mCountDownTimer?.cancel()
+                        viewModel.intervalTime.value?.setNextTime()
+                        startTimer()
                     }
-                }.start()
+                }
+            }.start()
         Log.d("ChronoFragment", "Starting a new countDownTimer")
         viewModel.mTimerRunning.value = true
+        bPause.visibility = View.VISIBLE
         bPause.setText(resources.getString(R.string.pause))
+        viewModel.soundIsPlaying.value = false
     }
 
     private fun pauseTimer() {
@@ -151,62 +152,69 @@ class ChronoFragment : DialogFragment() {
         val minutes = (viewModel.intervalTime.value?.mTimeLeftInMillis!! / 1000).toInt() / 60
         val seconds = (viewModel.intervalTime.value?.mTimeLeftInMillis!! / 1000).toInt() % 60
         var milisecondsInTenths: Long =
-                (viewModel.intervalTime.value?.mTimeLeftInMillis!! - ((viewModel.intervalTime.value?.mTimeLeftInMillis!! / 1000) * 1000)) / 10
+            (viewModel.intervalTime.value?.mTimeLeftInMillis!! - ((viewModel.intervalTime.value?.mTimeLeftInMillis!! / 1000) * 1000)) / 10
         val timeLeftFormatted: String =
-                java.lang.String.format(
-                        Locale.getDefault(),
-                        "%02d:%02d,%02d",
-                        minutes,
-                        seconds,
-                        milisecondsInTenths
-                )
+            java.lang.String.format(
+                Locale.getDefault(),
+                "%02d:%02d",
+                minutes,
+                seconds
+            )
 
         if (chronometer != null) {
             chronometer.text = timeLeftFormatted
 
             if (!viewModel.soundIsPlaying.value!!) {
-                if (viewModel.intervalTime.value?.isEnd()!!) {
-                    if (minutes == 0 && seconds == 0 && milisecondsInTenths < 50L) {
-                        playCountDownSound("end.wav")
+                if(viewModel.intervalTime.value!!.isEnd()) {
+                    if (minutes == 0 && seconds == 0) {
+                        Log.d("chronoFragment", "second is 0")
+                        viewModel.soundIsPlaying.value = true
+
+                        playCountDownSound("beep.wav")
+                    }
+                } else if (viewModel.intervalTime.value!!.isPreparing || viewModel.intervalTime.value!!.isRestRound || viewModel.intervalTime.value!!.actualSerie.rem(2) != 0) {
+                    if (minutes == 0 && seconds == 3 && milisecondsInTenths <= 55) {
+                        Log.d("chronoFragment", "second is 3")
+                        viewModel.soundIsPlaying.value = true
+
+                        playCountDownSound("countdown.wav")
+                    }
+                } else {
+                    if (minutes == 0 && seconds == 0) {
+                        Log.d("chronoFragment", "second is 0")
+                        viewModel.soundIsPlaying.value = true
+
+                        playCountDownSound("beep.wav")
                     }
                 }
-            } else if (viewModel.intervalTime.value!!.isPreparing || viewModel.intervalTime.value!!.isRestRound || viewModel.intervalTime.value!!.actualSerie.rem(2) != 0) {
-                if (minutes == 0 && seconds == 3 && milisecondsInTenths < 10L) {
-                    Log.d("chronoFragment", "second is 3")
-                    viewModel.soundIsPlaying.value = true
-
-                    playCountDownSound("count_down.wav")
-                }
-            } else {
-                if (minutes == 0 && seconds == 0 && milisecondsInTenths > 70L) {
-                    Log.d("chronoFragment", "second is 0")
-                    viewModel.soundIsPlaying.value = true
-
-                    playCountDownSound("beep.wav")
-                }
             }
-        }
 
-        if (viewModel.intervalTime.value?.isPreparing!!) {
-            tvTitleRoundsSeries.text = resources.getString(R.string.preparing_message)
-            chronometer.setTextColor(resources.getColor(R.color.colorSeries))
-        } else if (viewModel.intervalTime.value?.isRestRound!!) {
-            tvTitleRoundsSeries.text = resources.getString(
+
+            if (viewModel.intervalTime.value?.isPreparing!!) {
+                tvTitleRoundsSeries.text = resources.getString(R.string.preparing_message)
+                chronometer.setTextColor(resources.getColor(R.color.colorSeries))
+            } else if (viewModel.intervalTime.value?.isRestRound!!) {
+                tvTitleRoundsSeries.text = resources.getString(
                     R.string.rest_round_message,
                     viewModel.intervalTime.value?.actualRound?.plus(1)
-            )
-            chronometer.setTextColor(resources.getColor(R.color.colorRounds))
-        } else {
-            if (viewModel.intervalTime.value?.actualSerie?.plus(1)?.rem(2) == 0) {
-                tvTitleRoundsSeries.text = resources.getString(
-                        R.string.rest_serie_message,
-                        viewModel.intervalTime.value?.actualRound?.plus(1),
-                        (viewModel.intervalTime.value?.actualSerie!! / 2) + 1
                 )
                 chronometer.setTextColor(resources.getColor(R.color.colorRounds))
             } else {
-                tvTitleRoundsSeries.text = resources.getString(R.string.round_serie_message, viewModel.intervalTime.value?.actualRound?.plus(1), (viewModel.intervalTime.value?.actualSerie!!.plus(1) / 2) + 1)
-                chronometer.setTextColor(resources.getColor(R.color.colorSeries))
+                if (viewModel.intervalTime.value?.actualSerie?.plus(1)?.rem(2) == 0) {
+                    tvTitleRoundsSeries.text = resources.getString(
+                        R.string.rest_serie_message,
+                        viewModel.intervalTime.value?.actualRound?.plus(1),
+                        (viewModel.intervalTime.value?.actualSerie!! / 2) + 1
+                    )
+                    chronometer.setTextColor(resources.getColor(R.color.colorRounds))
+                } else {
+                    tvTitleRoundsSeries.text = resources.getString(
+                        R.string.round_serie_message,
+                        viewModel.intervalTime.value?.actualRound?.plus(1),
+                        (viewModel.intervalTime.value?.actualSerie!!.plus(1) / 2) + 1
+                    )
+                    chronometer.setTextColor(resources.getColor(R.color.colorSeries))
+                }
             }
         }
     }
@@ -232,7 +240,7 @@ class ChronoFragment : DialogFragment() {
     private fun showDialogMessage(message: Int) {
         val mDialogView = LayoutInflater.from(this.context).inflate(R.layout.dialog_error, null)
         val mBuilder = AlertDialog.Builder(this.context)
-                .setView(mDialogView)
+            .setView(mDialogView)
         val mAlertDialog = mBuilder.show()
         mAlertDialog.tvTitleDialog.text = resources.getString(R.string.title_error_message)
         mAlertDialog.bAccept.visibility = View.VISIBLE
